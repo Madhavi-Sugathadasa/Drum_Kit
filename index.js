@@ -34,21 +34,33 @@ function makeSound(key)
     
 }
 //detecting button press
-var noOfDrumButtons = document.querySelectorAll(".drum").length;
+var drumButtons = document.querySelectorAll(".drum");
+var noOfDrumButtons = drumButtons.length;
 
 for(var i = 0; i < noOfDrumButtons; i++)
 {
     
-        document.querySelectorAll(".drum")[i].addEventListener("click", function (){
+            drumButtons[i].addEventListener("click", function (){
+                var buttonInnerHTML = this.innerHTML;
+                makeSound(buttonInnerHTML);
+                buttonAnimation(buttonInnerHTML);
             
-            var buttonInnerHTML = this.innerHTML;
-            makeSound(buttonInnerHTML);
-            
-        });
+            });
 }
 
 //detecting key board press
 document.addEventListener("keydown", function(event)
     {
-    makeSound(event.key);
+    var key = event.key;
+    makeSound(key);
+    buttonAnimation(key);
 })
+
+function buttonAnimation(currentKey)
+{
+    var activeButton = document.querySelector("."+currentKey);
+    activeButton.classList.add("pressed");
+    setTimeout(function (){
+        activeButton.classList.remove("pressed");
+    },100)
+}
